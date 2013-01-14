@@ -48,6 +48,17 @@ module AssertType
     end
   end
 
+  module NoOpMethods
+    def at_assert *args
+    end
+
+    def at_assert_equal *args
+    end
+
+    def at_assert_type *args
+    end
+  end
+
 end
 
 #    # Left this for the client application to decide - to add to Object or use otherwise
