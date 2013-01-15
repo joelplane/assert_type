@@ -14,11 +14,9 @@ module AssertType
     end
 
     def parse
-      first_token = tokens.shift
-      main_type = first_token.value
-      node = TypeNode.new main_type
-      previous_word = node
-      current_words = []
+      root = TypeNode.root
+      previous_word = root
+      current_words = [root]
       tokens.each do |token|
         case token.name
           when :open_angle
@@ -31,7 +29,7 @@ module AssertType
             # ignore commas
         end
       end
-      node
+      root
     end
 
     def tokens

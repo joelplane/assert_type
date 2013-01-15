@@ -14,6 +14,10 @@ module AssertType
         [:word, "Array"], [:open_angle, "<"], [:word, "Fixnum"], [:comma, ","], [:word, "String"], [:close_angle, ">"]
       ]
 
+      TypeStringTokeniser.tokenise("Array<Fixnum>, nil").collect{|t|[t.name,t.value]}.should == [
+        [:word, "Array"], [:open_angle, "<"], [:word, "Fixnum"], [:close_angle, ">"], [:comma, ","], [:word, "nil"]
+      ]
+
     end
 
   end

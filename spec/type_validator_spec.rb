@@ -5,7 +5,9 @@ module AssertType
   describe TypeValidator do
 
     it "example: Array" do
-      node = stub("TypeNode", :name => "Array", :children => [])
+      node = stub("TypeNode", :name => "_root", :children => [
+        stub("TypeNode", :name => "Array", :children => [])
+      ])
       TypeValidator.valid?(node, []).should be_true
       TypeValidator.valid?(node, [1,2,3]).should be_true
       TypeValidator.valid?(node, ["one","two","three"]).should be_true
@@ -13,7 +15,9 @@ module AssertType
     end
 
     it "example: Set" do
-      node = stub("TypeNode", :name => "Set", :children => [])
+      node = stub("TypeNode", :name => "_root", :children => [
+        stub("TypeNode", :name => "Set", :children => [])
+      ])
       TypeValidator.valid?(node, Set.new).should be_true
       TypeValidator.valid?(node, Set.new([1,2,3])).should be_true
       TypeValidator.valid?(node, Set.new(["one","two","three"])).should be_true
@@ -24,7 +28,9 @@ module AssertType
     end
 
     it "example: Hash" do
-      node = stub("TypeNode", :name => "Hash", :children => [])
+      node = stub("TypeNode", :name => "_root", :children => [
+        stub("TypeNode", :name => "Hash", :children => [])
+      ])
       TypeValidator.valid?(node, {}).should be_true
       TypeValidator.valid?(node, {:one => 1, :two => 2}).should be_true
       TypeValidator.valid?(node, []).should be_false
@@ -33,8 +39,10 @@ module AssertType
     end
 
     it "example: Array<Fixnum>" do
-      node = stub("TypeNode", :name => "Array", :children => [
-        stub("TypeNode", :name => "Fixnum", :children => [])
+      node = stub("TypeNode", :name => "_root", :children => [
+        stub("TypeNode", :name => "Array", :children => [
+          stub("TypeNode", :name => "Fixnum", :children => [])
+        ])
       ])
       TypeValidator.valid?(node, [1,2,3]).should be_true
       TypeValidator.valid?(node, []).should be_true
@@ -42,9 +50,11 @@ module AssertType
     end
 
     it "example: Array<Fixnum, String>" do
-      node = stub("TypeNode", :name => "Array", :children => [
-        stub("TypeNode", :name => "Fixnum", :children => []),
-        stub("TypeNode", :name => "String", :children => [])
+      node = stub("TypeNode", :name => "_root", :children => [
+        stub("TypeNode", :name => "Array", :children => [
+          stub("TypeNode", :name => "Fixnum", :children => []),
+          stub("TypeNode", :name => "String", :children => [])
+        ])
       ])
       TypeValidator.valid?(node, [1,2,3]).should be_true
       TypeValidator.valid?(node, ["one", "two", "three"]).should be_true
@@ -53,9 +63,11 @@ module AssertType
     end
 
     it "example: Array<Array<Fixnum>>" do
-      node = stub("TypeNode", :name => "Array", :children => [
+      node = stub("TypeNode", :name => "_root", :children => [
         stub("TypeNode", :name => "Array", :children => [
-          stub("TypeNode", :name => "Fixnum", :children => [])
+          stub("TypeNode", :name => "Array", :children => [
+            stub("TypeNode", :name => "Fixnum", :children => [])
+          ])
         ])
       ])
       TypeValidator.valid?(node, [[1,2,3]]).should be_true
@@ -68,9 +80,11 @@ module AssertType
     end
 
     it "example: Array<Set<Fixnum>>" do
-      node = stub("TypeNode", :name => "Array", :children => [
-        stub("TypeNode", :name => "Set", :children => [
-          stub("TypeNode", :name => "Fixnum", :children => []),
+      node = stub("TypeNode", :name => "_root", :children => [
+        stub("TypeNode", :name => "Array", :children => [
+          stub("TypeNode", :name => "Set", :children => [
+            stub("TypeNode", :name => "Fixnum", :children => []),
+          ])
         ])
       ])
 
@@ -80,6 +94,19 @@ module AssertType
       TypeValidator.valid?(node, [Set.new(["one", "two", "three"])]).should be_false
       TypeValidator.valid?(node, [{}]).should be_false
       TypeValidator.valid?(node, [[]]).should be_false
+    end
+
+    it "example: Array<Fixnum>, nil" do
+      node = stub("TypeNode", :name => "_root", :children => [
+        stub("TypeNode", :name => "Array", :children => [
+          stub("TypeNode", :name => "Fixnum", :children => []),
+        ]),
+        stub("TypeNode", :name => "nil", :children => [])
+      ])
+      TypeValidator.valid?(node, []).should be_true
+      TypeValidator.valid?(node, [1,2,3]).should be_true
+      TypeValidator.valid?(node, nil).should be_true
+      TypeValidator.valid?(node, false).should be_false
     end
 
     ## Note: we can't parse this yet
