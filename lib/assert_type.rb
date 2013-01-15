@@ -9,6 +9,11 @@ require "assert_type/type_validator"
 module AssertType
 
   module AssertMethods
+
+    # @param expected_type [String] type string like "Array<Fixnum>"
+    # @param value [Object] value to check against type string
+    # @return [void]
+    # @raise [AssertType::AssertionError, AssertType::ParseError, AssertType::CallError]
     def assert_type expected_type, value
       if expected_type.is_a? String
         if node = AssertType::TypeStringParser.parse(expected_type)
@@ -22,11 +27,14 @@ module AssertType
         raise CallError.new
       end
     end
+
   end
 
   module NoOpMethods
+
     def assert_type *args
     end
+
   end
 
 end
