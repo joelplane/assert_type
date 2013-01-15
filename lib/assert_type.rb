@@ -9,7 +9,7 @@ require "assert_type/type_validator"
 module AssertType
 
   module AssertMethods
-    def at_assert_type expected_type, value
+    def assert_type expected_type, value
       if expected_type.is_a? String
         if node = AssertType::TypeStringParser.parse(expected_type)
           unless AssertType::TypeValidator.valid?(node, value)
@@ -25,7 +25,7 @@ module AssertType
   end
 
   module NoOpMethods
-    def at_assert_type *args
+    def assert_type *args
     end
   end
 

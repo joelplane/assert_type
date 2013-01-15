@@ -6,25 +6,25 @@ describe AssertType do
 
   def self.example_valid expected_type, value
     it "should not raise when asserting #{value.inspect} is a #{expected_type}" do
-      at_assert_type expected_type, value
+      assert_type expected_type, value
     end
   end
 
   def self.example_invalid expected_type, value
     it "should raise assertion error when asserting #{value.inspect} is a #{expected_type}" do
-      expect { at_assert_type expected_type, value }.to raise_error(AssertType::AssertionError)
+      expect { assert_type expected_type, value }.to raise_error(AssertType::AssertionError)
     end
   end
 
   def self.example_call_error expected_type, value
     it "should raise call error when asserting #{value.inspect} is a #{expected_type}" do
-      expect { at_assert_type expected_type, value }.to raise_error(AssertType::CallError)
+      expect { assert_type expected_type, value }.to raise_error(AssertType::CallError)
     end
   end
 
   def self.example_parse_error expected_type, value
     it "should raise parse error when asserting #{value.inspect} is a #{expected_type}" do
-      expect { at_assert_type expected_type, value }.to raise_error(AssertType::ParseError)
+      expect { assert_type expected_type, value }.to raise_error(AssertType::ParseError)
     end
   end
 
