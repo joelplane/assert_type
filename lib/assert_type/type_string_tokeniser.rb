@@ -1,3 +1,5 @@
+require File.expand_path('./parse_error.rb', File.dirname(__FILE__))
+
 module AssertType
   class TypeStringTokeniser
 
@@ -15,6 +17,7 @@ module AssertType
       while (t = next_token) do
         tokens << t
       end
+      raise ParseError.new unless @type_string.strip == ""
       tokens
     end
 
