@@ -3,6 +3,8 @@ require "assert_type/assertion_error"
 require "assert_type/type_assertion_error"
 require "assert_type/call_error"
 require "assert_type/parse_error"
+require "assert_type/type_string_parser"
+require "assert_type/type_validator"
 
 module AssertType
 
