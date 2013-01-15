@@ -1,9 +1,13 @@
+require File.expand_path("./error.rb", File.dirname(__FILE__))
+
 module AssertType
-  class AssertionError < RuntimeError
+  class AssertionError < Error
+
+    attr_reader :expected, :actual
 
     def initialize expected, actual
-      @expected = expected.to_s
-      @actual = actual.inspect
+      @expected = expected
+      @actual = actual
     end
 
     def message

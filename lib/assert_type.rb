@@ -1,6 +1,8 @@
 require "assert_type/version"
 require "assert_type/assertion_error"
+require "assert_type/type_assertion_error"
 require "assert_type/call_error"
+require "assert_type/parse_error"
 
 module AssertType
 
@@ -20,19 +22,17 @@ module AssertType
     def at_assert_type expected_type, value
       if expected_type.is_a? Class
         unless expected_type === value
-          raise AssertionError.new expected_type, value
+          raise TypeAssertionError.new expected_type.to_s, value
         end
       elsif expected_type.is_a? Array
         unless expected_type.any? {|t| t === value}
-          types = expected_type.collect do |t|
-            "<#{t}>"
-          end.join(' or ')
-          raise AssertionError.new types, value
+          types = expected_type.join(' or ')
+          raise TypeAssertionError.new types, value
         end
       elsif expected_type.is_a? String
         if node = AssertType::TypeStringParser.parse(expected_type)
           unless AssertType::TypeValidator.valid?(node, value)
-            raise AssertionError.new expected_type, value
+            raise TypeAssertionError.new expected_type, value
           end
         else
           raise ParseError.new

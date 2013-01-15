@@ -1,4 +1,6 @@
+require File.expand_path("./error.rb", File.dirname(__FILE__))
+
 module AssertType
-  class ParseError < RuntimeError
+  class ParseError < Error
   end
 end

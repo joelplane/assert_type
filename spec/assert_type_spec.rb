@@ -17,7 +17,7 @@ describe AssertType do
     at_assert_type [Fixnum, String], 1
     at_assert_type [Fixnum, String], "1"
     expect { at_assert_type [Fixnum, String], 1.1 }.to raise_error(AssertType::AssertionError) { |error|
-      error.message.should include %{expected <Fixnum> or <String> but was 1.1}
+      error.message.should include %{expected Fixnum or String but was 1.1}
     }
 
   end
