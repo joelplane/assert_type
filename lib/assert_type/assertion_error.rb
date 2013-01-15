@@ -1,9 +1,9 @@
 module AssertType
   class AssertionError < RuntimeError
 
-    def initialize expected, actual, expected_is_nested_type
-      @expected = expected_is_nested_type ? expected.to_s : expected.inspect
-      @actual = expected_is_nested_type ? actual.to_s : actual.inspect
+    def initialize expected, actual
+      @expected = expected.to_s
+      @actual = actual.inspect
     end
 
     def message
