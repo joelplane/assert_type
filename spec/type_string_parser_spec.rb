@@ -49,6 +49,12 @@ module AssertType
         root.children[1].children.length.should == 0
       end
 
+      it "example: AssertType::TypeStringParser" do
+        root = TypeStringParser.parse("AssertType::TypeStringParser")
+        root.children.length.should == 1
+        root.children[0].name.should == "AssertType::TypeStringParser"
+        root.children[0].children.length.should == 0
+      end
     end
 
   end

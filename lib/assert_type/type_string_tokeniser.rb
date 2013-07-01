@@ -26,7 +26,7 @@ module AssertType
     Token = Struct.new :name, :value
 
     TOKEN_MATCHERS = [
-      {:token_name => :word, :matcher => /^\w+/},
+      {:token_name => :word, :matcher => /^[\w:\d]+/},
       {:token_name => :open_angle, :matcher => /^</},
       {:token_name => :close_angle, :matcher => /^>/},
       {:token_name => :comma, :matcher => /^,/}
