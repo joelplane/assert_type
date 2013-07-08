@@ -45,6 +45,14 @@ describe AssertType do
   example_valid   "String, Symbol", :Symbol
   example_invalid "String, Symbol", 42
 
+  example_valid   "AssertType::TestClass", AssertType::TestClass.new
+  example_invalid "AssertType::TestClass", AssertType::TestClass
+  example_valid   "AssertType::TestClass", AssertType::TestSubClass.new
+
+  example_invalid "Array<AssertType::TestSubClass>", [AssertType::TestClass.new]
+  example_valid   "Array<AssertType::TestSubClass>", [AssertType::TestSubClass.new]
+  example_valid   "Array<AssertType::TestSubClass>", [AssertType::TestSubSubClass.new]
+
   example_call_error Array, []
   example_call_error [Fixnum, String], 1
   example_call_error [1,2,3], "Array<Fixnum>"

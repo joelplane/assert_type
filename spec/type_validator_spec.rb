@@ -109,6 +109,25 @@ module AssertType
       TypeValidator.valid?(node, false).should be_false
     end
 
+    it "example: custom class" do
+      node = stub("TypeNode", :name => "_root", :children => [
+        stub("TypeNode", :name => "AssertType::TestClass", :children => [])
+      ])
+      TypeValidator.valid?(node, {}).should be_false
+      TypeValidator.valid?(node, []).should be_false
+      TypeValidator.valid?(node, AssertType::TestClass).should be_false
+      TypeValidator.valid?(node, AssertType::TestClass.new).should be_true
+    end
+
+    it "example: subclass" do
+      node = stub("TypeNode", :name => "_root", :children => [
+        stub("TypeNode", :name => "AssertType::TestSubClass", :children => [])
+      ])
+      TypeValidator.valid?(node, AssertType::TestClass.new).should be_false
+      TypeValidator.valid?(node, AssertType::TestSubClass.new).should be_true
+      TypeValidator.valid?(node, AssertType::TestSubSubClass.new).should be_true
+    end
+
     ## Note: we can't parse this yet
     #xit "example: Hash{Symbol => Fixnum}" do
     #  node = stub("TypeNode", :name => "Hash", :children => [

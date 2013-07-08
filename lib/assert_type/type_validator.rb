@@ -26,7 +26,9 @@ module AssertType
           when "false"
             value == false
           else
-            type_name == value.class.to_s
+            value.class.ancestors.collect(&:to_s).any? do |value_class|
+              type_name == value_class.to_s
+            end
         end
 
       end
